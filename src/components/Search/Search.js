@@ -7,6 +7,10 @@ export default function Search () {
         setSearchText(changedSearchText);
         console.log('ironman changedSearchText', JSON.stringify(changedSearchText));
     };
+    const loadOptions = (searchText) => {
+        console.log('ironman searchText', searchText);
+        return {options: []}
+    }
     return (
         <>
         <div>Hello</div>
@@ -15,6 +19,7 @@ export default function Search () {
         placeholder="Search for city"
         value={searchText}
         debounceTimeout={600}
+        loadOptions={loadOptions}
         onChange={handleSearchTextChange}/>
         </>
     )
