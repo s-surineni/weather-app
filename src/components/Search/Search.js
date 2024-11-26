@@ -1,20 +1,27 @@
 import { AsyncPaginate } from "react-select-async-paginate";
 import { useState } from "react";
-
+import { GEO_API_URL, GEO_API_OPTIONS } from "../../apis/cityApis";
 export default function Search () {
     const [searchText, setSearchText] = useState("");
     const handleSearchTextChange = (changedSearchText) => {
         setSearchText(changedSearchText);
         console.log('ironman changedSearchText', JSON.stringify(changedSearchText));
     };
-    const loadOptions = (searchText) => {
+    const  loadOptions = async (searchText) => {
         console.log('ironman searchText', searchText);
-        return {options: []}
+        console.log('ironman GEO_API_OPTIONS', JSON.stringify(GEO_API_OPTIONS));
+        const response = await fetch(`${GEO_API_URL}/cities?minPopulation=10000&namePrefix=${searchText}`, GEO_API_OPTIONS);
+        const {data} = await response.json();
+        console.log('ironman data', JSON.stringify(data));
+        const ret =  data.map((city) => ({ value: `${city.latitude} ${city.longitude}`, label: `${city.name}, ${city.countryCode}` }));
+        console.log('ironman ret', JSON.stringify(ret));
+        return {options: ret};
+        // const ret = response.map((city) => ({ value: `${city.latitude} ${city.longitude}`, label: `${city.name}, ${city.countryCode}` }));
+        // const ret = {options: [{value: "1", label: "1"}, {value: "2", label: "2"}, {value: "3", label: "3"}]};
+        // return ret;
     }
     return (
         <>
-        <div>Hello</div>
-        <div>{searchText}</div>
         <AsyncPaginate 
         placeholder="Search for city"
         value={searchText}
