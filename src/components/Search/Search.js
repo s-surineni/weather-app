@@ -1,11 +1,11 @@
 import { AsyncPaginate } from "react-select-async-paginate";
 import { useState } from "react";
 import { GEO_API_URL, GEO_API_OPTIONS } from "../../apis/cityApis";
-export default function Search () {
+export default function Search ({handleCitySelection}) {
     const [searchText, setSearchText] = useState("");
     const handleSearchTextChange = (changedSearchText) => {
         setSearchText(changedSearchText);
-        console.log('ironman changedSearchText', JSON.stringify(changedSearchText));
+        handleCitySelection(changedSearchText);
     };
     const  loadOptions = async (searchText) => {
         console.log('ironman searchText', searchText);
