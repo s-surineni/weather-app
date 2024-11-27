@@ -1,4 +1,5 @@
 import './App.css';
+import CurrentWeather from './components/CurrentWeather/CurrentWeather';
 import Search from './components/Search/Search';
 import { useState } from 'react';
 
@@ -9,12 +10,11 @@ function App() {
     setDump(JSON.stringify(city));
   }
   return (
-    <>
-      <div className="container">
-        <Search handleCitySelection={handleCitySelection} />
-        <div>{dump}</div>
-      </div>
-    </>
+    <div className="container">
+      <div>{dump}</div>
+      <Search handleCitySelection={handleCitySelection} />
+      <CurrentWeather />
+    </div>
   );
 }
 
