@@ -5,13 +5,18 @@ import { useState } from 'react';
 import {WEATHER_API_URL, WEATHER_API_OPTIONS} from './apis/weatherApi';
 
 function App() {
+  let temp;
+  const [weatherData, setWeatherData] = useState(null);
   const [dump, setDump] = useState("");
   const handleCitySelection = async (city) => {
     setDump(JSON.stringify(city));
     const [lat, lon] = city.value.split(" ");
     try {
-      const weatherData = await fetch(`${WEATHER_API_URL}/city/latlon/${lat}/${lon}`, WEATHER_API_OPTIONS);
-      setDump(JSON.stringify(await weatherData.json()));
+      const response = await (await fetch(`${WEATHER_API_URL}/city/latlon/${lat}/${lon}&units=metric`, WEATHER_API_OPTIONS)).json();
+      setDump(JSON.stringify( weatherData));
+      setWeatherData(response);
+      console.log('ironman temp', JSON.stringify(temp));
+      // setDump(JSON.stringify(await weatherData.json()));
 
     } catch (error) {
       console.error(error);
@@ -21,7 +26,7 @@ function App() {
     <div className="container">
       <div>{dump}</div>
       <Search handleCitySelection={handleCitySelection} />
-      <CurrentWeather />
+      {weatherData && <CurrentWeather weatherData={weatherData}/>}
     </div>
   );
 }
