@@ -12,9 +12,7 @@ export default function Search ({handleCitySelection}) {
         console.log('ironman GEO_API_OPTIONS', JSON.stringify(GEO_API_OPTIONS));
         const response = await fetch(`${GEO_API_URL}/cities?minPopulation=10000&namePrefix=${searchText}`, GEO_API_OPTIONS);
         const {data} = await response.json();
-        console.log('ironman data', JSON.stringify(data));
         const ret =  data.map((city) => ({ value: `${city.latitude} ${city.longitude}`, label: `${city.name}, ${city.countryCode}` }));
-        console.log('ironman ret', JSON.stringify(ret));
         return {options: ret};
         // const ret = response.map((city) => ({ value: `${city.latitude} ${city.longitude}`, label: `${city.name}, ${city.countryCode}` }));
         // const ret = {options: [{value: "1", label: "1"}, {value: "2", label: "2"}, {value: "3", label: "3"}]};
