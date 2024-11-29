@@ -6,8 +6,8 @@ import {WEATHER_API_URL, WEATHER_API_OPTIONS} from './apis/weatherApi';
 import Forecast from './components/Forecast/Forecast';
 
 function App() {
-  let temp;
   const [weatherData, setWeatherData] = useState(null);
+  const [forecast, setForecast] = useState(null);
   const [dump, setDump] = useState("");
   const handleCitySelection = async (city) => {
     setDump(JSON.stringify(city));
@@ -16,9 +16,10 @@ function App() {
       const response = await (await fetch(`${WEATHER_API_URL}/city/latlon/${lat}/${lon}&units=metric`, WEATHER_API_OPTIONS)).json();
       setDump(JSON.stringify( weatherData));
       setWeatherData(response);
-      console.log('ironman temp', JSON.stringify(temp));
-      // setDump(JSON.stringify(await weatherData.json()));
-
+      const response2 = await (await fetch(`${WEATHER_API_URL}/city/fivedaysforcast/${lat}/${lon}?units=metric`, WEATHER_API_OPTIONS)).json();
+      setForecast(response2);
+      setDump(JSON.stringify(response2));
+      console.log('ironman response2', JSON.stringify(response2));
     } catch (error) {
       console.error(error);
     }
@@ -28,7 +29,7 @@ function App() {
       <div>{dump}</div>
       <Search handleCitySelection={handleCitySelection} />
       {weatherData && <CurrentWeather weatherData={weatherData}/>}
-      <Forecast />
+      {forecast && <Forecast forecast={forecast}/>}
     </div>
   );
 }
