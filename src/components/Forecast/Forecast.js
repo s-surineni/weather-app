@@ -1,6 +1,7 @@
 import { Accordion, AccordionItem, AccordionItemHeading, AccordionItemButton, AccordionItemPanel } from "react-accessible-accordion";
 
 export default function Forecast({ forecast }) {
+    const WEEK_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     return (
         <>
             <label className="title">Daily</label>
@@ -9,7 +10,9 @@ export default function Forecast({ forecast }) {
                     <AccordionItem key={idx}>
                         <AccordionItemHeading>
                             <AccordionItemButton>
-                                {JSON.stringify(day)}
+                                <div className="daily-item">
+                                    <img alt="weather" className="icon-small" src={`icons/${day.weather[0].icon}.png`} />
+                                </div>
                             </AccordionItemButton>
                         </AccordionItemHeading>
                         <AccordionItemPanel></AccordionItemPanel>
