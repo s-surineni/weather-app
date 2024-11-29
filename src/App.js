@@ -3,6 +3,7 @@ import CurrentWeather from './components/CurrentWeather/CurrentWeather';
 import Search from './components/Search/Search';
 import { useState } from 'react';
 import {WEATHER_API_URL, WEATHER_API_OPTIONS} from './apis/weatherApi';
+import Forecast from './components/Forecast/Forecast';
 
 function App() {
   let temp;
@@ -27,6 +28,7 @@ function App() {
       <div>{dump}</div>
       <Search handleCitySelection={handleCitySelection} />
       {weatherData && <CurrentWeather weatherData={weatherData}/>}
+      <Forecast />
     </div>
   );
 }
